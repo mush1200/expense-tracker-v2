@@ -1,15 +1,10 @@
-const mongoose = require('mongoose')
+const db = require('../../config/mongoose')
 const bcrypt = require('bcryptjs')
 const User = require('../user')
 const { userSeed, recordSeeds } = require('./seed.json')
 const record = require('../record')
-mongoose.connect('mongodb://localhost/expense-tracker-v2', { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('mongodb error!')
-})
+
 db.once('open', async () => {
-  console.log('mongodb connected!')
   try {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(userSeed.password, salt)
