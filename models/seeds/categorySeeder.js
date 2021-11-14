@@ -1,4 +1,3 @@
-
 const Category = require('../category')
 const { categorySeeds } = require('./seed.json')
 const db = require('../../config/mongoose')
