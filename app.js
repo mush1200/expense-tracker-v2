@@ -5,7 +5,9 @@ const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const app = express()
 const routes = require('./routes')
-
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 require('./config/mongoose')
 const port = 3000
 
