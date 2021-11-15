@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 require('./config/mongoose')
-const port = 3000
+const port = process.env.port
 
 
 app.use(express.urlencoded({ extended: true }))

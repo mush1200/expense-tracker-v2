@@ -1,6 +1,8 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
+var GitHubStrategy = require('passport-github2').Strategy;
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 module.exports = app => {
@@ -60,4 +62,63 @@ module.exports = app => {
           .catch(err => done(err, false))
       })
   }))
+  //設定google登入策略
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_callbackURL
+  },
+    async (accessToken, refreshToken, profile, done) => {
+        try {
+          const googleId = profile.id
+          const { name, email } = profile._json
+          let user = await User.findOne({ googleId })
+          if (user) return done(null, user)
+          user = await User.findOne({ email })
+          if (user) {
+            Object.assign(user, { googleId })
+            user = await user.save()
+            return done(null, user)
+          }
+          const randomPassword = Math.random().toString(36).slice(-10)
+          const salt = await bcrypt.genSalt(10)
+          const hash = await bcrypt.hash(randomPassword, salt)
+          user = await User.create({ name, email, password: hash, googleId })
+          return done(null, user)
+        } catch (err) {
+          console.log(err)
+          done(err, false)
+        }
+      }
+  ))
+  //設定GitHub登入策略
+  passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.GITHUB_callbackURL
+  },
+  async (accessToken, refreshToken, profile, done) => {
+        try {
+          const githubId = profile.id
+          const name = profile.username
+          const email = profile.profileUrl
+          let user = await User.findOne({ githubId })
+          if (user) return done(null, user)
+          user = await User.findOne({ email })
+          if (user) {
+            Object.assign(user, { githubId })
+            user = await user.save()
+            return done(null, user)
+          }
+          const randomPassword = Math.random().toString(36).slice(-10)
+          const salt = await bcrypt.genSalt(10)
+          const hash = await bcrypt.hash(randomPassword, salt)
+          user = await User.create({ name, email, password: hash, githubId })
+          return done(null, user)
+        } catch (err) {
+          console.log(err)
+          done(err, false)
+        }
+      }
+  ))
 }
