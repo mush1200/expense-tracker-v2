@@ -15,7 +15,12 @@ const port = process.env.port
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', 
+  exphbs({ 
+    defaultLayout: 'main',
+    helpers: require('./config/handlebars-helpers')
+  })
+)
 app.set('view engine', 'handlebars')
 
 app.use(session({

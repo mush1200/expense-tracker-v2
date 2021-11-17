@@ -1,1 +1,122 @@
-<div>老爸私房錢</div>
+<div class="container index-container my-3 pt-2">
+  <div class="row d-flex justify-content-center">
+    <div class="col-10">
+      <form name="filter-form" action="/expense/records/filter" method="GET" id="filter-form">
+        <div class="row mb-3 d-flex flex-column justify-content-center align-items-center">
+          <div class="col-12 col-md-5 date-filter d-flex justify-content-center justify-content-md-around mb-3">
+            <div class="">FROM</div>
+            <div class="">
+              <div class="container-fluid form-group mb-0">
+                <input type="date" name="startDate" value="{{ startDate }}" id="start-date-input">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-5 date-filter d-flex justify-content-center justify-content-md-around mb-3">
+            <div class="">TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="">
+              <div class="container-fluid form-group mb-0">
+                <input type="date" name="endDate" value="{{ endDate }}" id="end-date-input">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-9 mx-auto">
+            <div class="container-fluid form-group filter-dropdown">
+              <select name="category" class="form-control mx-auto" id='category-filter' onchange="submit()"
+                style="cursor: pointer;">
+                <option value="">全類別</option>
+                <option value="housewares" {{#if (eq categoryFilter 'housewares' )}} selected {{/if}}>家居物業
+                </option>
+                <option value="transportation" {{#if (eq categoryFilter 'transportation' )}} selected {{/if}}>
+                  交通出行
+                </option>
+                <option value="entertainment" {{#if (eq categoryFilter 'entertainment' )}} selected {{/if}}>
+                  休閒娛樂
+                </option>
+                <option value="consumption" {{#if (eq categoryFilter 'consumption' )}} selected {{/if}}>餐飲食品
+                </option>
+                <option value="others" {{#if (eq categoryFilter 'others' )}} selected {{/if}}>其他</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-12 col-sm-4 mr-auto d-flex justify-content-center align-items-center">
+          <p class="font-weight-bold total-amount-text">TOTAL:</h3>
+        </div>
+        <div class="col-12 col-sm-5 d-flex justify-content-center align-items-center">
+          <p class="total-amount-expense">{{ totalAmount }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="list-group" id="record-panel">
+    {{#each records}}
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-10">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-2 d-flex justify-content-center align-items-center category-icon-expense"><i
+                class="{{ this.icon }}"></i>
+            </div>
+            <div class="col-7 col-lg-6">
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <p class="my-3 font-weight-bold record-name">{{ this.name }}</p>
+                  <p class="my-3 font-weight-bold record-date">{{ toDate this.date }}</p>
+                </div>
+                <div class="col-12 col-lg-6 d-flex align-items-center">
+                  <i class="fas fa-store place-icon"></i>
+                  <p class="m-2 font-weight-bold d-inline record-place">{{ this.merchant }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 col-lg-4 d-flex justify-content-end">
+              <div class="row justify-content-end">
+                <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center">
+                  <p class="font-weight-bold record-amount mb-0">$&nbsp;{{ this.amount }}</p>
+                </div>
+                <div
+                  class="col-auto col-lg-auto d-flex flex-column flex-sm-row flex-lg-column justify-content-around align-items-center">
+                  <a href="/expense/records/{{ this._id }}/edit" class="btn btn-success icon-button mr-2"><i
+                      class="fas fa-edit fa-lg"></i></a>
+                  <button type="button" class="btn btn-danger icon-button delete-button mr-2" data-toggle="modal"
+                    data-target="#recordModal" data-name="{{ this.name }}" data-type="{{ this.type }}"
+                    data-id="{{ this._id }}"><i class="fas fa-trash-alt fa-lg"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </div>
+    </div>
+    {{/each}}
+  </ul>
+  <div class="add-btn">
+    <a href="/expense/records/new" style="position:fixed; bottom:50px; right:30px;"><i class="fas fa-plus-circle fa-3x"></i></a>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="recordModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure to delete this record?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form action="/expense/records/:id?_method=DELETE" method="POST" style="display: inline;" id="confirm-form">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

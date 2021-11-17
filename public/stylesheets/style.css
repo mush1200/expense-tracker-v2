@@ -164,3 +164,12 @@
   font-size: 22px;
   line-height: 40px;
 }
+
+/* 新增支出按鈕 */
+.fa-plus-circle {
+  cursor: pointer;
+  color: darkorange;
+}
+.fa-plus-circle:hover{
+  color: rgba(0, 119, 255, 0.972);
+}

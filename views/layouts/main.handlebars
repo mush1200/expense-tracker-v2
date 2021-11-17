@@ -12,16 +12,32 @@
 </head>
 <body >
   <!--navbar-->
-  <nav class="navbar sticky-top navbar-dark bg-info">
-    <a class="navbar-brand mb-0 h1" href="/">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-info">
+    <a class="navbar-brand mb-0 h1 mr-auto" href="/">
       {{#if isAuthenticated}}
       {{user.name}}'s
       {{/if}}
       家庭記帳本</a>
     {{#if isAuthenticated}}
-    <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">支出 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/income">收入</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/balance">收支平衡表</a>
+        </li>
+        
+      </ul>
+    </div>
+    {{/if}}
+    {{#if isAuthenticated}}
+    <a href="/users/logout" class="btn btn-outline-light my-2 my-lg-0">Logout</a>
     {{else}}
-    <a href="/users/login" class="btn btn-outline-light">Login</a>
+    <a href="/users/login" class="btn btn-outline-light my-2 my-lg-0">Login</a>
     {{/if}}
   </nav>
   <div class="container pt-5" style="min-width: 300px;">
