@@ -10,5 +10,5 @@ router.get('/expense/records/new', moneyController.newPage)
 
 router.post('/expense/records', moneyController.createExpense)
 
-router.get('/expense/records/:id/edit', moneyController.editExpense)
+router.get('/expense/records/:id/edit', moneyController.editPage)
 module.exports = router
