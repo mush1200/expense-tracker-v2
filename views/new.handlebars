@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <form action="/records" method="POST" class="d-flex flex-column align-items-center" id="form" novalidate>
+    <div class="col-sm-8">
+      <div class="title row">
+        <p class="col-5">*必填欄位</p>
+        <h3 class="col-7">請輸入你的支出</h3>
+      </div>
+      <div class="form-group row">
+        <label for="name" class="col-form-label col-sm-2">名稱*:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="name" placeholder="" maxlength="30" name="name" required>
+          <div class="valid-feedback">Good!</div>
+          <div class="invalid-feedback">This field is required!</div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="date" class="col-sm-2 col-form-label">日期*:</label>
+        <div class="col-sm-10">
+          <input type="date" class="form-control" id="date" placeholder="" name="date" required>
+          <div class="valid-feedback">Good!</div>
+          <div class="invalid-feedback">This field is required!</div>
+        </div>
+
+      </div>
+      <div class="form-group row">
+        <label for="category" class="col-sm-2 col-form-label">類別*:</label>
+        <div class="col-sm-10">
+          <select class="form-control" id="category" placeholder="類別" name="category" required>
+            <option value="" selected hidden>Select</option>
+            <option value="housewares">家居物業
+            </option>
+            <option value="transportation">
+              交通出行
+            </option>
+            <option value="entertainment">
+              休閒娛樂
+            </option>
+            <option value="consumption">餐飲食品
+            </option>
+            <option value="others">其他</option>
+          </select>
+          <div class="valid-feedback">Good!</div>
+          <div class="invalid-feedback">This field is required!</div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="merchant" class="col-form-label col-sm-2">店家*:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="merchant" maxlength="30" placeholder="" name="merchant" required>
+          <div class="valid-feedback">Good!</div>
+          <div class="invalid-feedback">This field is required!</div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="amount" class="col-sm-2 col-form-label">金額*:</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="amount" min="0" placeholder="" name="amount" required>
+          <div class="valid-feedback">Good!</div>
+          <div class="invalid-feedback">This field is required!</div>
+        </div>
+
+      </div>
+      <!--button-->
+      <div class="d-flex justify-content-center button-section mt-5">
+        <button type="submit" id="submit-btn" class="btn btn-outline-dark btn-lg">新增支出</button>
+      </div>
+    </div>
+
+
+  </form>
+</div>

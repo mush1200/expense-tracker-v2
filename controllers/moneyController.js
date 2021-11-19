@@ -53,6 +53,9 @@ const moneyController = {
       startDate,
       endDate
     })
+  },
+  newPage: (req, res) => {
+    res.render('new')
   }
   
 }
