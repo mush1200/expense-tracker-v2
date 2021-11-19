@@ -97,7 +97,14 @@ const moneyController = {
     await record.save()
     req.flash('success_message', '已成功修改支出紀錄')
     res.redirect('/')
-  }
-  
+  },
+  deleteExpense: async(req, res, next) => {
+    const userId = req.user._id
+    const _id = req.params.id
+    const record = await Record.findOne({ _id, userId })
+    await record.remove()
+    req.flash('success_message', '已成功刪除支出紀錄')
+    return res.redirect('/')
+  }  
 }
 module.exports = moneyController
