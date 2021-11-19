@@ -74,6 +74,29 @@ const moneyController = {
     return res.render('edit', {
       record
     })
+  },
+  putExpense: async(req, res, next) => {
+    const userId = req.user._id
+    const _id = req.params.id
+    const { name, category, date, amount, merchant } = req.body
+    if (name === "" || date === "" || category === "" || amount === "" || merchant === "") {
+      return res.render('edit', {
+        name,
+        category,
+        date,
+        amount,
+        merchant
+      })
+    }
+    const record = await Record.findOne({ _id, userId })
+    record.name = name
+    record.category = category
+    record.date = date
+    record.amount = amount
+    record.merchant = merchant
+    await record.save()
+    req.flash('success_message', '已成功修改支出紀錄')
+    res.redirect('/')
   }
   
 }

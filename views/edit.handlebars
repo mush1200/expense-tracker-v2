@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <form action="/records/{{record._id}}?_method=PUT" method="POST" class="d-flex flex-column align-items-center"
+  <form action="/expense/records/{{record._id}}?_method=PUT" method="POST" class="d-flex flex-column align-items-center"
     id="form" novalidate>
     <div class="col-sm-8">
       <div class="title row">
@@ -28,11 +28,11 @@
         <label for="category" class="col-sm-2 col-form-label">類別*:</label>
         <div class="col-sm-10">
           <select class="form-control" id="category" placeholder="類別" name="category" require>
-            <option value="housewares" {{#if (eq record.category '家居物業' )}} selected {{/if}}>家居物業</option>
-            <option value="transportation" {{#if (eq record.category '交通出行' )}} selected {{/if}}>交通出行</option>
-            <option value="entertainment" {{#if (eq record.category '休閒娛樂' )}} selected {{/if}}>休閒娛樂</option>
-            <option value="consumption" {{#if (eq record.category '餐飲食品' )}} selected {{/if}}>餐飲食品</option>
-            <option value="others" {{#if (eq record.category '其他' )}} selected {{/if}}>其他</option>
+            <option value="housewares"{{#if (eq record.category 'housewares' )}} selected {{/if}}>家居物業</option>
+            <option value="transportation" {{#if (eq record.category 'transportation' )}} selected {{/if}}>交通出行</option>
+            <option value="entertainment" {{#if (eq record.category 'entertainment' )}} selected {{/if}}>休閒娛樂</option>
+            <option value="consumption" {{#if (eq record.category 'consumption' )}} selected {{/if}}>餐飲食品</option>
+            <option value="others" {{#if (eq record.category 'others' )}} selected {{/if}}>其他</option>
           </select>
           <div class="valid-feedback">Good!</div>
           <div class="invalid-feedback">This field is required!</div>

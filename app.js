@@ -4,6 +4,7 @@ const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const app = express()
+const methodOverride = require('method-override') 
 const routes = require('./routes')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')  // 設定 warning_msg 訊息
   next()
 })
+app.use(methodOverride('_method'))
 app.use(routes)
 
 app.listen(port, () => {

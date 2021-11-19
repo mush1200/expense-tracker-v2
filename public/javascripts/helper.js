@@ -2,7 +2,7 @@ const record = require("../../models/record")
 
 module.exports = {
   getIconName(categoryName, categories) {
-    const category = categories.find((category) => category.name_cn === categoryName)
+    const category = categories.find((category) => category.name === categoryName)
     return category.icon
   },
    getTotalAmount(records) {

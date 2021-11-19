@@ -9,7 +9,7 @@
       "type": "income",
       "name": "薪水",
       "merchant": "公司",
-      "category": "薪資所得",
+      "category": "salary",
       "date": "2021-04-01",
       "amount": 35000
     },
@@ -17,7 +17,7 @@
       "type": "income",
       "name": "年終獎金",
       "merchant": "公司",
-      "category": "獎金紅利",
+      "category": "bonus",
       "date": "2021-03-15",
       "amount": 100000
     },
@@ -25,7 +25,7 @@
       "type": "income",
       "name": "定存利息",
       "merchant": "銀行",
-      "category": "投資報酬",
+      "category": "investment",
       "date": "2021-04-01",
       "amount": 3000
     },
@@ -33,7 +33,7 @@
       "type": "income",
       "name": "撿到錢",
       "merchant": "路上",
-      "category": "其他",
+      "category": "others",
       "date": "2021-04-01",
       "amount": 1000
     },
@@ -41,7 +41,7 @@
       "type": "expense",
       "name": "看電影",
       "merchant": "威秀",
-      "category": "休閒娛樂",
+      "category": "entertainment",
       "date": "2021-04-29",
       "amount": 300
     },
@@ -49,7 +49,7 @@
       "type": "expense",
       "name": "牛肉麵",
       "merchant": "李記川味牛肉麵",
-      "category": "餐飲食品",
+      "category": "consumption",
       "date": "2021-04-30",
       "amount": 200
     },
@@ -57,7 +57,7 @@
       "type": "expense",
       "name": "搭捷運",
       "merchant": "台北捷運",
-      "category": "交通出行",
+      "category": "transportation",
       "date": "2021-04-30",
       "amount": 50
     },
@@ -65,7 +65,7 @@
       "type": "expense",
       "name": "打保齡球",
       "merchant": "保齡球館",
-      "category": "休閒娛樂",
+      "category": "entertainment",
       "date": "2021-05-02",
       "amount": 220
     },
@@ -73,7 +73,7 @@
       "type": "expense",
       "name": "搭火車",
       "merchant": "台鐵",
-      "category": "交通出行",
+      "category": "transportation",
       "date": "2021-05-05",
       "amount": 350
     },
@@ -81,7 +81,7 @@
       "type": "expense",
       "name": "買洗衣精",
       "merchant": "全聯",
-      "category": "家居物業",
+      "category": "housewares",
       "date": "2021-05-05",
       "amount": 80
     },
@@ -89,7 +89,7 @@
       "type": "expense",
       "name": "買衛生紙",
       "merchant": "全聯",
-      "category": "家居物業",
+      "category": "housewares",
       "date": "2021-05-10",
       "amount": 120
     },
@@ -97,7 +97,7 @@
       "type": "expense",
       "name": "繳水電費",
       "merchant": "台水台電",
-      "category": "其他",
+      "category": "others",
       "date": "2021-05-08",
       "amount": 1300
     },
@@ -105,7 +105,7 @@
       "type": "expense",
       "name": "繳稅",
       "merchant": "國稅局",
-      "category": "其他",
+      "category": "others",
       "date": "2021-05-06",
       "amount": 3300
     }
