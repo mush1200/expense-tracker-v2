@@ -66,6 +66,14 @@ const moneyController = {
     await Record.create({ name, date, category, amount, merchant, userId, type: 'expense' })
     req.flash('success_messages', '已成功建立支出紀錄')
     res.redirect('/')
+  },
+  editExpense: async(req, res, next) => {
+    const userId = req.user._id
+    const _id = req.params.id
+    const record = await Record.findOne({ _id, userId }).lean()
+    return res.render('edit', {
+      record
+    })
   }
   
 }
