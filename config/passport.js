@@ -14,13 +14,13 @@ module.exports = app => {
     User.findOne({ email })
       .then(user => {
         if (!user) {
-          req.flash('warning_msg', '這個信箱尚未註冊。')
+          req.flash('error_messages', '這個信箱尚未註冊。')
           return done(null, false, { message: 'That email is not registered!' })
         }
         bcrypt.compare(password, user.password)
           .then(isMatch => {
             if (!isMatch) {
-              req.flash('warning_msg', '信箱或密碼輸入不正確。')
+              req.flash('error_messages', '信箱或密碼輸入不正確。')
               return done(null, false, { message: 'Email or Password incorrect.'})
             }
             return done(null, user)
