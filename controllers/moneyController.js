@@ -56,6 +56,16 @@ const moneyController = {
   },
   newPage: (req, res) => {
     res.render('new')
+  },
+  createExpense: async(req, res, next) => {
+    const userId = req.user._id
+    const { name, date, category, amount, merchant } = req.body
+    if (name === "" || date === "" || category === "" || amount === "" || merchant === "") {
+    return res.redirect('/expense/records/new')
+    }
+    await Record.create({ name, date, category, amount, merchant, userId, type: 'expense' })
+    req.flash('success_messages', '已成功建立支出紀錄')
+    res.redirect('/')
   }
   
 }

@@ -8,4 +8,6 @@ router.get('/expense/records/filter', moneyController.getFilteredExpense)
 
 router.get('/expense/records/new', moneyController.newPage)
 
+router.post('/expense/records', moneyController.createExpense)
+
 module.exports = router
