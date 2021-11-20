@@ -16,5 +16,8 @@ router.put('/expense/records/:id',moneyController.putExpense)
 
 router.delete('/expense/records/:id', moneyController.deleteExpense)
 
+router.get('/income', moneyController.getIncome)
+
+router.get('/income/records/filter', moneyController.getFilteredIncome)
 
 module.exports = router

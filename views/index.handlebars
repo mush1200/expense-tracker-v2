@@ -1,7 +1,11 @@
 <div class="container index-container my-3 pt-2">
   <div class="row d-flex justify-content-center">
     <div class="col-10">
+      {{#if (eq index "expense")}}
       <form name="filter-form" action="/expense/records/filter" method="GET" id="filter-form">
+      {{else}}
+      <form name="filter-form" action="/income/records/filter" method="GET" id="filter-form">
+      {{/if}}
         <div class="row mb-3 d-flex flex-column justify-content-center align-items-center">
           <div class="col-12 col-md-5 date-filter d-flex justify-content-center justify-content-md-around mb-3">
             <div class="">FROM</div>
@@ -23,8 +27,8 @@
         <div class="row">
           <div class="col-12 col-sm-9 mx-auto">
             <div class="container-fluid form-group filter-dropdown">
-              <select name="category" class="form-control mx-auto" id='category-filter' onchange="submit()"
-                style="cursor: pointer;">
+              {{#if (eq index "expense")}}
+              <select name="category" class="form-control mx-auto" id='category-filter' onchange="submit()" style="cursor: pointer;">
                 <option value="">全類別</option>
                 <option value="housewares" {{#if (eq categoryFilter 'housewares' )}} selected {{/if}}>家居物業
                 </option>
@@ -38,6 +42,22 @@
                 </option>
                 <option value="others" {{#if (eq categoryFilter 'others' )}} selected {{/if}}>其他</option>
               </select>
+              {{else}}
+              <select name="category" class="form-control mx-auto" id='category-filter' onchange="submit()" style="cursor: pointer;">
+                <option value="">全類別</option>
+                <option value="salary" {{#if (eq categoryFilter 'salary' )}} selected {{/if}}>薪資所得
+                </option>
+                <option value="bonus" {{#if (eq categoryFilter 'bonus' )}} selected {{/if}}>
+                  獎金紅利
+                </option>
+                <option value="investment" {{#if (eq categoryFilter 'investment' )}} selected {{/if}}>
+                  投資報酬
+                </option>
+                <option value="others" {{#if (eq categoryFilter 'others' )}} selected {{/if}}>其他
+                </option>
+              </select>
+              {{/if}}
+              
             </div>
           </div>
         </div>
@@ -108,7 +128,11 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            {{#if (eq index "expense")}}
             <form action="/expense/records/{{this._id}}?_method=DELETE" method="POST" style="display: inline;" id="confirm-form">
+            {{else}}
+            <form action="/income/records/{{this._id}}?_method=DELETE" method="POST" style="display: inline;" id="confirm-form">
+            {{/if}}
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </div>

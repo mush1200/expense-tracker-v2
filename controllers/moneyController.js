@@ -18,17 +18,20 @@ const moneyController = {
     const totalAmount = getTotalAmount(records)
     const startDate = '2021-01-01'
     const endDate = moment().format('YYYY-MM-DD')
+    const index = "expense"
     return res.render('index', {
       records,
       totalAmount,
       startDate,
-      endDate
+      endDate,
+      index
     })
   },
   getFilteredExpense: async(req, res, next) => {
     const userId = req.user._id
     const categoryFilter = req.query.category
     let { startDate, endDate } = req.query
+    const index = "expense"
     if (new Date(startDate) > new Date(endDate)) {
       req.flash('error_messages', '起訖日期不正確，重新輸入')
       return  res.redirect('/')
@@ -51,7 +54,8 @@ const moneyController = {
       totalAmount,
       categoryFilter,
       startDate,
-      endDate
+      endDate,
+      index
     })
   },
   newPage: (req, res) => {
@@ -105,6 +109,61 @@ const moneyController = {
     await record.remove()
     req.flash('success_message', '已成功刪除支出紀錄')
     return res.redirect('/')
-  }  
+  },
+  getIncome: async(req, res, next) => {
+    const userId = req.user._id
+    const [ incomeRecords, categories] = await Promise.all([
+      Record.find({
+        userId,
+        type: 'income'
+      }).lean().sort({ date: 'desc' }),
+      Category.find().lean()
+    ])
+    incomeRecords.forEach((incomeRecord) => {
+      incomeRecord.icon = getIconName(incomeRecord.category, categories)
+    })
+    const totalAmount = getTotalAmount(incomeRecords)
+    const startDate = '2021-01-01'
+    const endDate = moment().format('YYYY-MM-DD')
+    const index = "income"
+    return res.render('index', {
+      records: incomeRecords,
+      totalAmount,
+      startDate,
+      endDate,
+      index
+    })
+  },
+  getFilteredIncome: async(req, res, next) => {
+    const userId = req.user._id
+    const categoryFilter = req.query.category
+    const index = "income"
+    let { startDate, endDate } = req.query
+    if (new Date(startDate) > new Date(endDate)) {
+      req.flash('error_messages', '起訖日期不正確，重新輸入')
+      return  res.redirect('/income')
+    }
+    const [filteredRecords, categories] = await Promise.all([
+      Record.find({
+        category: { $regex: categoryFilter },
+        date: { $gte: startDate, $lte: endDate },
+        userId,
+        type: 'income'
+      }).lean().sort({ date: 'desc' }),
+      Category.find().lean()
+    ])
+    filteredRecords.forEach((record) => {
+      record.icon = getIconName(record.category, categories)
+    })
+    let totalAmount = getTotalAmount(filteredRecords)
+    res.render('index', {
+      records: filteredRecords,
+      totalAmount,
+      categoryFilter,
+      startDate,
+      endDate,
+      index
+    })
+  }
 }
 module.exports = moneyController
