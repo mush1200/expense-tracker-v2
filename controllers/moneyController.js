@@ -77,22 +77,26 @@ const moneyController = {
   editPage: async(req, res, next) => {
     const userId = req.user._id
     const _id = req.params.id
+    const index = req.params.index
     const record = await Record.findOne({ _id, userId }).lean()
     return res.render('edit', {
-      record
+      record,
+      index
     })
   },
   putExpense: async(req, res, next) => {
     const userId = req.user._id
     const _id = req.params.id
     const { name, category, date, amount, merchant } = req.body
+    const index = 'expense'
     if (name === "" || date === "" || category === "" || amount === "" || merchant === "") {
       return res.render('edit', {
         name,
         category,
         date,
         amount,
-        merchant
+        merchant,
+        index
       })
     }
     const record = await Record.findOne({ _id, userId })
@@ -102,7 +106,7 @@ const moneyController = {
     record.amount = amount
     record.merchant = merchant
     await record.save()
-    req.flash('success_message', '已成功修改支出紀錄')
+    req.flash('success_messages', '已成功修改支出紀錄')
     res.redirect('/')
   },
   deleteExpense: async(req, res, next) => {
@@ -110,8 +114,8 @@ const moneyController = {
     const _id = req.params.id
     const record = await Record.findOne({ _id, userId })
     await record.remove()
-    req.flash('success_message', '已成功刪除支出紀錄')
-    return res.redirect('/')
+    req.flash('success_messages', '已成功刪除紀錄')
+    return res.redirect('back')
   },
   getIncome: async(req, res, next) => {
     const userId = req.user._id
@@ -176,6 +180,31 @@ const moneyController = {
     }
     await Record.create({ name, date, category, amount, merchant, userId, type: 'income' })
     req.flash('success_messages', '已成功建立收入紀錄')
+    res.redirect('/income')
+  },
+  putIncome: async(req, res, next) => {
+    const userId = req.user._id
+    const _id = req.params.id
+    const index = "income"
+    const { name, category, date, amount, merchant } = req.body
+    if (name === "" || date === "" || category === "" || amount === "" || merchant === "") {
+      return res.render('edit', {
+        name,
+        category,
+        date,
+        amount,
+        merchant,
+        index
+      })
+    }
+    const record = await Record.findOne({ _id, userId })
+    record.name = name
+    record.category = category
+    record.date = date
+    record.amount = amount
+    record.merchant = merchant
+    await record.save()
+    req.flash('success_messages', '已成功修改收入紀錄')
     res.redirect('/income')
   }
 }

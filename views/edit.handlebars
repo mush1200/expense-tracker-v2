@@ -1,10 +1,15 @@
 <div class="container mt-5">
+  {{#if (eq index 'expense')}}
   <form action="/expense/records/{{record._id}}?_method=PUT" method="POST" class="d-flex flex-column align-items-center"
     id="form" novalidate>
+  {{else}}
+  <form action="/income/records/{{record._id}}?_method=PUT" method="POST" class="d-flex flex-column align-items-center"
+    id="form" novalidate>
+  {{/if}}
     <div class="col-sm-8">
       <div class="title row">
         <p class="col-5">*必填欄位</p>
-        <h3 class="col-7">請修改你的支出</h3>
+        <h3 class="col-7">{{#if (eq index 'expense')}}請修改你的支出{{else}}請修改你的收入{{/if}}</h3>
       </div>
       <div class="form-group row">
         <label for="name" class="col-form-label col-sm-2">名稱*:</label>
@@ -26,9 +31,10 @@
       </div>
       <div class="form-group row">
         <label for="category" class="col-sm-2 col-form-label">類別*:</label>
+        {{#if (eq index 'expense')}}
         <div class="col-sm-10">
           <select class="form-control" id="category" placeholder="類別" name="category" require>
-            <option value="housewares"{{#if (eq record.category 'housewares' )}} selected {{/if}}>家居物業</option>
+            <option value="housewares" {{#if (eq record.category 'housewares' )}} selected {{/if}}>家居物業</option>
             <option value="transportation" {{#if (eq record.category 'transportation' )}} selected {{/if}}>交通出行</option>
             <option value="entertainment" {{#if (eq record.category 'entertainment' )}} selected {{/if}}>休閒娛樂</option>
             <option value="consumption" {{#if (eq record.category 'consumption' )}} selected {{/if}}>餐飲食品</option>
@@ -37,10 +43,23 @@
           <div class="valid-feedback">Good!</div>
           <div class="invalid-feedback">This field is required!</div>
         </div>
+        {{else}}
+        <div class="col-sm-10">
+          <select class="form-control" id="category" placeholder="類別" name="category" require>
+            <option value="salary" {{#if (eq record.category 'salary' )}} selected {{/if}}>薪資所得</option>
+            <option value="bonus" {{#if (eq record.category 'bonus' )}} selected {{/if}}>獎金紅利</option>
+            <option value="investment" {{#if (eq record.category 'investment' )}} selected {{/if}}>投資報酬</option>
+            <option value="others" {{#if (eq record.category 'others' )}} selected {{/if}}>其他</option>
+          </select>
+          <div class="valid-feedback">Good!</div>
+          <div class="invalid-feedback">This field is required!</div>
+        </div>
+        {{/if}}
+        
       </div>
 
       <div class="form-group row">
-        <label for="merchant" class="col-form-label col-sm-2">店家*:</label>
+        <label for="merchant" class="col-form-label col-sm-2">{{#if (eq index 'expense')}}店家*:{{else}}來源*:{{/if}}</label>
         <div class="col-sm-10">
           <input type="text" class="form-control" id="merchant" placeholder="" name="merchant"
             value="{{record.merchant}}" required>
