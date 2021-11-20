@@ -142,6 +142,13 @@
     {{/each}}
   </ul>
   <div class="add-btn">
-    <a href="/expense/records/new" style="position:fixed; bottom:50px; right:30px;"><i class="fas fa-plus-circle fa-3x"></i></a>
+    {{#if (eq index 'expense')}}
+    <a href="/expense/records/new" style="position:fixed; bottom:50px; right:30px;"><i
+        class="fas fa-plus-circle fa-3x"></i></a>
+    {{else}}
+    <a href="/income/records/new" style="position:fixed; bottom:50px; right:30px;"><i
+        class="fas fa-plus-circle fa-3x"></i></a>
+    {{/if}}
+    
   </div>
 </div>

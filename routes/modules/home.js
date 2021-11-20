@@ -6,7 +6,7 @@ router.get('/', moneyController.getExpense)
 
 router.get('/expense/records/filter', moneyController.getFilteredExpense)
 
-router.get('/expense/records/new', moneyController.newPage)
+router.get('/:index/records/new', moneyController.newPage)
 
 router.post('/expense/records', moneyController.createExpense)
 
@@ -20,4 +20,7 @@ router.get('/income', moneyController.getIncome)
 
 router.get('/income/records/filter', moneyController.getFilteredIncome)
 
+router.get('/income/records/new', moneyController.newPage)
+
+router.post('/income/records', moneyController.createIncome)
 module.exports = router
