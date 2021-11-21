@@ -6,6 +6,7 @@ const flash = require('connect-flash')
 const app = express()
 const methodOverride = require('method-override') 
 const routes = require('./routes')
+const chart = require('chart.js')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }

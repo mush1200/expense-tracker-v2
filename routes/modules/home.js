@@ -1,5 +1,6 @@
 const moneyController = require('../../controllers/moneyController')
 const express = require('express')
+const balanceController = require('../../controllers/balanceController')
 const router = express.Router()
 
 router.get('/', moneyController.getExpense)
@@ -25,5 +26,7 @@ router.get('/income/records/new', moneyController.newPage)
 router.post('/income/records', moneyController.createIncome)
 
 router.put('/income/records/:id', moneyController.putIncome)
+
+router.get('/balance', balanceController.balancePage)
 
 module.exports = router
