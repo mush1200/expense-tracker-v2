@@ -1,7 +1,7 @@
 {
   "userSeed": {
-    "name": "root",
-    "email": "root@example.com",
+    "name": "user1",
+    "email": "user1@example.com",
     "password": "12345678"
   },
   "recordSeeds": [

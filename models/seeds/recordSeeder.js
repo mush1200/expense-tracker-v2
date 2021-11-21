@@ -1,22 +1,30 @@
+const bcrypt = require('bcryptjs/dist/bcrypt')
 const db = require('../../config/mongoose')
-const bcrypt = require('bcryptjs')
+const Record = require('../record')
 const User = require('../user')
 const { userSeed, recordSeeds } = require('./seed.json')
-const record = require('../record')
-
+ 
 db.once('open', async () => {
   try {
     const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(userSeed.password, salt)
+    const userhash = await bcrypt.hash(userSeed.password, salt)
     const user = await User.create({
       name: userSeed.name,
       email: userSeed.email,
-      password: hash
+      password: userhash
     })
     recordSeeds.forEach((record) => {
       record.userId = user._id
     })
-    await record.create(recordSeeds)
+    await Record.create(recordSeeds)
+//root
+    const roothash = await bcrypt.hash('12345678', salt)
+    const root = await User.create({
+      name: 'root',
+      email: 'root@example.com',
+      password: roothash,
+      isAdmin: '1'
+    })
     console.log('record seeder done!')
     await db.close()
     console.log('mongodb disconnected!')

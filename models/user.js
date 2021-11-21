@@ -25,6 +25,11 @@ const userSchema = new Schema({
   },
   githubId: { 
     type: String 
+  },
+  isAdmin: {
+    type: String,
+    default: 0,
+    required: true,
   }
 })
 module.exports = mongoose.model('User', userSchema)
