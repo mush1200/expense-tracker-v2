@@ -1,4 +1,5 @@
 const moneyController = require('../../controllers/moneyController')
+const adminController = require('../../controllers/adminController.js')
 const express = require('express')
 const balanceController = require('../../controllers/balanceController')
 const router = express.Router()
@@ -28,5 +29,25 @@ router.post('/income/records', moneyController.createIncome)
 router.put('/income/records/:id', moneyController.putIncome)
 
 router.get('/balance', balanceController.balancePage)
+
+// admin
+
+const authenticatedAdmin = (req, res, next) => {
+  console.log(req.isAuthenticated())
+  console.log(req.user)
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin === '1') {
+      console.log(req.user.isAdmin)
+      return next() }
+    req.flash('error_messages', '此帳號非管理者帳號！')
+    return res.redirect('/')
+  }
+  res.redirect('/admin/signin')
+}
+router.get('/admin/signin', adminController.signInPage)
+router.post('/admin/login', adminController.login)
+router.get('/admin/logout', adminController.logout)
+router.get('/admin/index', authenticatedAdmin, adminController.adminPage)
+
 
 module.exports = router

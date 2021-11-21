@@ -1,0 +1,38 @@
+<h1>使用者頁列表</h1>
+
+
+<br />
+<br />
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">email</th>
+      <th scope="col">Name</th>
+      <th scope="col">功能</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <th scope="row">{{this.email}}</th>
+      <td>{{this.name}}</td>
+      <td>
+        <button type="button" class="btn btn-link">
+          <a href="/admin/user/{{this._id}}">
+            Show
+          </a>
+        </button>
+        <button type="button" class="btn btn-link">
+          <a href="/admin/user/{{this._id}}/edit">
+            Edit
+          </a>
+        </button>
+        <form action="/admin/user/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-link">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
