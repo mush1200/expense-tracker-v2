@@ -30,6 +30,8 @@ router.put('/income/records/:id', moneyController.putIncome)
 
 router.get('/balance', balanceController.balancePage)
 
+router.get('/balance/records/filter', balanceController.getFilteredBalance)
+
 // admin
 
 const authenticatedAdmin = (req, res, next) => {

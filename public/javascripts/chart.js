@@ -83,7 +83,7 @@ function showExpenseChart() {
       '休閒娛樂','餐飲食品', '其他'],
       datasets: [{
         label: 'Expense Dataset',
-        data: [salary, bonus , investment, incomeOthers],
+        data: [housewares, transportation , entertainment, consumption, expenseOthers],
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
           'rgba(54, 162, 235, 0.5)',
