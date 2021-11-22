@@ -16,7 +16,6 @@ const adminController = {
     .lean()
     .then()
     .then(users => {
-      console.log(users)
       res.render('admin/index', { users })})
     .catch(err => console.log(err))
  

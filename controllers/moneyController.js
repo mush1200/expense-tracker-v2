@@ -3,7 +3,7 @@ const Record = require('../models/record')
 const Category = require('../models/category')
 const { getIconName, getTotalAmount } = require('../public/javascripts/helper')
 const moneyController = {
-  getExpense: async(req, res,next) => {
+  getExpense: async(req, res, next) => {
     const userId = req.user._id
     const [ records, categories] = await Promise.all([
       Record.find({
