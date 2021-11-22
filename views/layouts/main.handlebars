@@ -13,6 +13,20 @@
 <body >
   <!--navbar-->
   <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-info">
+    {{#if (eq user.name "root")}}
+    <a class="navbar-brand mb-0 h1 mr-auto" href="/admin/index">
+      使用者列表</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item  active">
+          <a class="nav-link" href="/admin/users">使用者統計</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/category">類別統計</a>
+        </li>
+      </ul>
+    </div>
+    {{ else }}
     <a class="navbar-brand mb-0 h1 mr-auto" href="/">
       {{#if isAuthenticated}}
       {{user.name}}'s
@@ -30,9 +44,10 @@
         <li class="nav-item {{#if (eq index 'balance')}} active {{/if}}">
           <a class="nav-link" href="/balance">收支平衡表</a>
         </li>
-        
+  
       </ul>
     </div>
+    {{/if}}
     {{/if}}
     {{#if isAuthenticated}}
     <a href="/users/logout" class="btn btn-outline-light my-2 my-lg-0">Logout</a>
