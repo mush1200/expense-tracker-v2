@@ -3,8 +3,8 @@ const adminController = require('../../controllers/adminController.js')
 const express = require('express')
 const balanceController = require('../../controllers/balanceController')
 const router = express.Router()
+const { authenticator } = require('../../middleware/auth')
 
-router.get('/', moneyController.getExpense)
 
 router.get('/expense/records/filter', moneyController.getFilteredExpense)
 
@@ -50,6 +50,6 @@ router.get('/admin/signin', adminController.signInPage)
 router.post('/admin/login', adminController.login)
 router.get('/admin/logout', adminController.logout)
 router.get('/admin/index', authenticatedAdmin, adminController.adminPage)
-
+router.get('/', authenticator, moneyController.getExpense)
 
 module.exports = router
