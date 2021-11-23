@@ -2,20 +2,20 @@
   <div class="row d-flex justify-content-center">
     <div class="col-10">
       <form name="filter-form" action="/balance/records/filter" method="GET" id="filter-form">
-        <div class="row mb-3 d-flex justify-content-center">
+        <div class="row mb-3 d-flex flex-column justify-content-center align-items-center">
           <div class="col-12 col-md-5 date-filter d-flex justify-content-center justify-content-md-around mb-3">
-            <div class="text-center pt-1 pl-3">FROM</div>
-            <div class="px-0">
+            <div class="">FROM</div>
+            <div class="">
               <div class="container-fluid form-group mb-0">
-                <input type="date" name="startDate" value="{{ startDate }}" id="start-date-input">
+                <input type="date" name="startDate" value="{{ startDate }}" id="start-date-input" onchange="submit()">
               </div>
             </div>
           </div>
           <div class="col-12 col-md-5 date-filter d-flex justify-content-center justify-content-md-around mb-3">
-            <div class="text-center pt-1">TO</div>
-            <div class="px-0">
+            <div class="">TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="">
               <div class="container-fluid form-group mb-0">
-                <input type="date" name="endDate" value="{{ endDate }}" id="end-date-input">
+                <input type="date" name="endDate" value="{{ endDate }}" id="end-date-input" onchange="submit()">
               </div>
             </div>
           </div>
@@ -34,25 +34,28 @@
         {{#if isIncomeRecordPresent}}
         <div class="col-12 col-md-6 col-lg-5 mb-3">
           <canvas id="income-chart" width="400" height="400" aria-label="income doughnut chart"></canvas>
-          {{!-- <span id ="income-msg" class="income-category-sum" data-msg="{{ incomeCategorizedSum }}">{{ incomeCategorizedSum }}</span> --}}
-          <input id ="salary" class="income-salary-sum" type="hidden" name="salary" value="{{ incomeCategorizedSum.salary }}">
-          <input id="bonus" class="income-bonus-sum" type="hidden" name="bonus" value="{{ incomeCategorizedSum.bonus }}">
-          <input id="investment" class="income-investment-sum" type="hidden" name="investment" value="{{ incomeCategorizedSum.investment }}">
-          <input id="others" class="income-others-sum" type="hidden" name="others" value="{{ incomeCategorizedSum.others }}">
         </div>
         {{/if}}
+        <input id="salary" class="income-salary-sum" type="hidden" name="salary" value="{{ incomeCategorizedSum.salary }}">
+        <input id="bonus" class="income-bonus-sum" type="hidden" name="bonus" value="{{ incomeCategorizedSum.bonus }}">
+        <input id="investment" class="income-investment-sum" type="hidden" name="investment"
+          value="{{ incomeCategorizedSum.investment }}">
+        <input id="others" class="income-others-sum" type="hidden" name="others" value="{{ incomeCategorizedSum.others }}">
         {{#if isExpenseRecordPresent}}
         <div class="col-12 col-md-6 col-lg-5 mb-3">
           <canvas id="expense-chart" width="400" height="400" aria-label="expense doughnut chart"></canvas>
-          {{!-- <span class="expense-category-sum" hidden>{{ expenseCategorizedSum }}</span> --}}
-          <input id="housewares" class="expense-housewares-sum" type="hidden" name="housewares" value="{{ expenseCategorizedSum.housewares }}">
-          <input id="transportation" class="expense-transportation-sum" type="hidden" name="transportation" value="{{ expenseCategorizedSum.transportation }}">
-          <input id="entertainment" class="expense-entertainment-sum" type="hidden" name="entertainment"
-            value="{{ expenseCategorizedSum.entertainment }}">
-          <input id="consumption" class="expense-consumption-sum" type="hidden" name="consumption" value="{{ expenseCategorizedSum.consumption }}">
-          <input id="others" class="expense-others-sum" type="hidden" name="others" value="{{ expenseCategorizedSum.others }}">
         </div>
         {{/if}}
+        <input id="housewares" class="expense-housewares-sum" type="hidden" name="housewares"
+          value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.housewares }}{{else}}0{{/if}}">
+        <input id="transportation" class="expense-transportation-sum" type="hidden" name="transportation"
+          value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.transportation }}{{else}}0{{/if}}">
+        <input id="entertainment" class="expense-entertainment-sum" type="hidden" name="entertainment"
+          value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.entertainment }}{{else}}0{{/if}}">
+        <input id="consumption" class="expense-consumption-sum" type="hidden" name="consumption"
+          value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.consumption }}{{else}}0{{/if}}">
+        <input id="others" class="expense-others-sum" type="hidden" name="others"
+          value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.others }}{{else}}0{{/if}}">
       </div>
     </div>
   </div>
@@ -70,7 +73,7 @@
               <div class="row">
                 <div class="col-12 col-lg-6">
                   <p class="my-3 font-weight-bold record-name">{{ this.name }}</p>
-                  <p class="my-3 font-weight-bold record-date">{{ this.date }}</p>
+                  <p class="my-3 font-weight-bold record-date">{{ toDate this.date }}</p>
                 </div>
                 <div class="col-12 col-lg-6 d-flex align-items-center">
                   <i class="fas fa-store place-icon"></i>

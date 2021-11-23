@@ -30,6 +30,8 @@ router.put('/income/records/:id', authenticator, moneyController.putIncome)
 
 router.get('/balance', authenticator, balanceController.balancePage)
 
+router.get('/balance/records/filter', balanceController.getFilteredBalance)
+
 // admin
 
 router.get('/admin/signin', adminController.signInPage)
