@@ -50,6 +50,7 @@ router.get('/admin/signin', adminController.signInPage)
 router.post('/admin/login', adminController.login)
 router.get('/admin/logout', adminController.logout)
 router.get('/admin/index', authenticatedAdmin, adminController.adminPage)
+router.get('/admin/users/income', adminController.getUserIncomeRating)
 router.get('/', authenticator, moneyController.getExpense)
 
 module.exports = router
