@@ -118,6 +118,9 @@ const moneyController = {
     const _id = req.params.id
     const record = await Record.findOne({ _id, userId })
     await record.remove()
+    const user = await User.findOne({ _id: userId })
+    user.records = user.records.filter(record => record.toString() !== _id)
+    await user.save()
     req.flash('success_messages', '已成功刪除紀錄')
     return res.redirect('back')
   },
