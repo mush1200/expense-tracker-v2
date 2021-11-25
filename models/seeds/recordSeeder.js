@@ -4,7 +4,7 @@ const Record = require('../record')
 const User = require('../user')
 const { userSeed, recordSeeds } = require('./seed.json')
  
-db.once('open', async () => {
+db.once('open', async (req, res, next) => {
   try {
     const salt = await bcrypt.genSalt(10)
     const userhash = await bcrypt.hash(userSeed.password, salt)
@@ -16,7 +16,11 @@ db.once('open', async () => {
     recordSeeds.forEach((record) => {
       record.userId = user._id
     })
-    await Record.create(recordSeeds)
+    const records = await Record.create(recordSeeds)
+    records.forEach((record) => {
+      user.records.push(record._id)
+    })
+    await user.save()
 //root
     const roothash = await bcrypt.hash('12345678', salt)
     const root = await User.create({

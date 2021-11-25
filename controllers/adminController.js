@@ -5,15 +5,6 @@ const Record = require('../models/record')
 const Category = require('../models/category')
 const { getIconName, getTotalAmount } = require('../public/javascripts/helper')
 const adminController = {
-  getUserIncomeRating: async (req, res, next) => {
-    const records = await Record.find({
-      type: 'income'
-    }).populate('userId').lean().sort({ date: 'desc' })
-    const a = records.map((record) => {
-      console.log(record.userId)
-    })
-    res.render('admin/userIncomeRating')
-  },
   signInPage: async (req, res) => {
     req.logout()
     return res.render('admin/signin')
@@ -66,17 +57,20 @@ const adminController = {
     res.redirect('/admin/signin')
   },
   getUserIncomeRating: async(req, res, next) => {
-    const records = await Record.find({
-      type: 'income'
-    }).populate({
-      path: 'userId',
-      match: { isAdmin: { $ne: "0" } },
-    }).lean().sort({date: 'desc'})
-    let array = []
-    const a = records.map((record) => {
-      array.push(record)
-    })
-    console.log(array)
+    const users = await User.find({
+      isAdmin: '0'
+    }).populate('records').lean()
+    // const records = await Record.find({
+    //   type: 'income'
+    // }).populate({
+    //   path: 'userId',
+    //   select: ['name', 'email']
+    // }).lean()
+    // records.forEach((record)=> {record.name = record.userId.name, record.email = record.userId.email})
+    // console.log(records)
+    // console.log(records.userId)
+    console.log(users)
+    console.log(users.records)
     res.render('admin/userIncomeRating')
   }
 }
