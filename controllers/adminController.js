@@ -57,21 +57,6 @@ const adminController = {
     res.redirect('/admin/signin')
   },
   getUserIncomeRating: async(req, res, next) => {
-    const users = await User.find({
-      isAdmin: '0'
-    }).populate('records').lean()
-    // const records = await Record.find({
-    //   type: 'income'
-    // }).populate({
-    //   path: 'userId',
-    //   select: ['name', 'email']
-    // }).lean()
-    // records.forEach((record)=> {record.name = record.userId.name, record.email = record.userId.email})
-    // console.log(records)
-    // console.log(records.userId)
-    console.log(users)
-    console.log(users.records)
-    res.render('admin/userIncomeRating')
   }
 }
 
