@@ -2,6 +2,7 @@ const moment = require('moment')
 const Record = require('../models/record')
 const Category = require('../models/category')
 const { getIconName, getTotalAmount } = require('../public/javascripts/helper')
+const User = require('../models/user')
 const moneyController = {
   getExpense: async(req, res, next) => {
     const userId = req.user._id
@@ -70,7 +71,11 @@ const moneyController = {
     if (name === "" || date === "" || category === "" || amount === "" || merchant === "") {
     return res.redirect('/expense/records/new')
     }
-    await Record.create({ name, date, category, amount, merchant, userId, type: 'expense' })
+    const record = await Record.create({ name, date, category, amount, merchant, userId, type: 'expense' })
+    const user = await User.findOne({_id: userId})
+    user.records.push(record._id)
+    await user.save()
+
     req.flash('success_messages', '已成功建立支出紀錄')
     res.redirect('/')
   },
@@ -114,6 +119,11 @@ const moneyController = {
     const _id = req.params.id
     const record = await Record.findOne({ _id, userId })
     await record.remove()
+    
+    const user = await User.findOne({ _id: userId })
+    user.records = user.records.filter(record => record.toString() !== _id)
+    await user.save()
+
     req.flash('success_messages', '已成功刪除紀錄')
     return res.redirect('back')
   },
@@ -178,7 +188,11 @@ const moneyController = {
     if (name === "" || date === "" || category === "" || amount === "" || merchant === "") {
     return res.redirect('/income/records/new')
     }
-    await Record.create({ name, date, category, amount, merchant, userId, type: 'income' })
+    const record = await Record.create({ name, date, category, amount, merchant, userId, type: 'income' })
+    const user = await User.findOne({ _id: userId })
+    user.records.push(record._id)
+    await user.save()
+
     req.flash('success_messages', '已成功建立收入紀錄')
     res.redirect('/income')
   },

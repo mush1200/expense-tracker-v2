@@ -40,6 +40,7 @@ router.get('/admin/logout', adminController.logout)
 router.get('/admin/index', authenticatedAdmin, adminController.adminPage)
 
 router.get('/admin/users/income', authenticatedAdmin, adminController.getUserIncomeRating)
+router.get('/admin/users/expense', authenticatedAdmin, adminController.getUserExpenseRating)
 router.get('/admin/category/income', authenticatedAdmin, adminController.getCatogryincomeRating)
 router.get('/admin/category/expense', authenticatedAdmin, adminController.getCatogryexpenseRating)
 router.get('/', authenticator, moneyController.getExpense)

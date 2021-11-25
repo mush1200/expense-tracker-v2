@@ -16,7 +16,12 @@ db.once('open', async () => {
     recordSeeds.forEach((record) => {
       record.userId = user._id
     })
-    await Record.create(recordSeeds)
+    await Record.create(recordSeeds).then(records => {
+      records.forEach(record => {
+        user.records.push(record._id)
+      })
+      user.save()
+    })
 //root
     const roothash = await bcrypt.hash('12345678', salt)
     const root = await User.create({
