@@ -13,5 +13,4 @@ router.get('/users/expense', authenticatedAdmin, adminController.getUserExpenseR
 router.get('/category/income', authenticatedAdmin, adminController.getCatogryincomeRating)
 router.get('/category/expense', authenticatedAdmin, adminController.getCatogryexpenseRating)
 router.get('/user/:_id', authenticatedAdmin, adminController.getShowPage)
-
 module.exports = router

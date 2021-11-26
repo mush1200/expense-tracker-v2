@@ -6,6 +6,7 @@ const Category = require('../models/category')
 const { getIconName, getTotalAmount, getIncomeCategorizedSum, getExpenseCategorizedSum } = require('../public/javascripts/helper')
 const adminController = {
   getShowPage: async (req, res, next) => {
+    const index = 'userList'
     const userId = req.params._id
     const [ records, categories ] = await Promise.all([Record.find({ userId }).sort({ date: 'desc' }).lean(), Category.find().lean()])
     records.forEach((record) => {
@@ -21,19 +22,9 @@ const adminController = {
       isIncomeRecordPresent,
       isExpenseRecordPresent,
       incomeCategorizedSum,
-      expenseCategorizedSum
+      expenseCategorizedSum,
+      index
     })
-    // try {
-    //   const userId = req.params._id
-    //   const thisuser = await User.findOne({ userId }).populate({
-    //     path: 'records',
-    //   }).lean()
-    //   thisuser.recordLength = thisuser.records.length
-    //   thisuser.TotalAmount = getTotalAmount(thisuser.records)
-    //   res.render('admin/show', { thisuser })
-    // } catch (err) {
-    //   console.warn(err)
-    // }
   },
   getUserIncomeRating: async (req, res, next) => {
     const index = "userRating"
