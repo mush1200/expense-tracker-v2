@@ -75,7 +75,6 @@ const moneyController = {
     const user = await User.findOne({_id: userId})
     user.records.push(record._id)
     await user.save()
-
     req.flash('success_messages', '已成功建立支出紀錄')
     res.redirect('/')
   },
@@ -119,11 +118,9 @@ const moneyController = {
     const _id = req.params.id
     const record = await Record.findOne({ _id, userId })
     await record.remove()
-    
     const user = await User.findOne({ _id: userId })
     user.records = user.records.filter(record => record.toString() !== _id)
     await user.save()
-
     req.flash('success_messages', '已成功刪除紀錄')
     return res.redirect('back')
   },
@@ -189,10 +186,9 @@ const moneyController = {
     return res.redirect('/income/records/new')
     }
     const record = await Record.create({ name, date, category, amount, merchant, userId, type: 'income' })
-    const user = await User.findOne({ _id: userId })
+    const user = await User.findOne({_id: userId})
     user.records.push(record._id)
     await user.save()
-
     req.flash('success_messages', '已成功建立收入紀錄')
     res.redirect('/income')
   },

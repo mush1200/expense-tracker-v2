@@ -19,6 +19,7 @@ const adminController = {
     }
   },
   getUserIncomeRating: async (req, res, next) => {
+    const index = "userRating"
     const users = await User.find({
       isAdmin: '0'
     }).populate({
@@ -40,9 +41,10 @@ const adminController = {
     for (let i = 0; i < sortList.length; i++) {
       sortList[i].rating = i + 1
     }
-    res.render('admin/userIncomeRating', { sortList })
+    res.render('admin/userIncomeRating', { sortList, index })
   },
   getUserExpenseRating: async (req, res, next) => {
+    const index = "userRating"
     const users = await User.find({
       isAdmin: '0'
     }).populate({
@@ -64,7 +66,7 @@ const adminController = {
     for (let i = 0; i < sortList.length; i++) {
       sortList[i].rating = i + 1
     }
-    res.render('admin/userExpenseRating', { sortList })
+    res.render('admin/userExpenseRating', { sortList, index })
   },
   signInPage: async (req, res) => {
     req.logout()
@@ -92,36 +94,40 @@ const adminController = {
 
   },
   getCatogryincomeRating: async (req, res) => {
-    const [salaryData, bonusData, transportationData, othersData] = await Promise.all([Record.find({ type: "income", category: "salary" }).lean(), Record.find({ type: "income", category: "bonus" }).lean(), Record.find({ type: "income", category: "transportation" }).lean(), Record.find({ type: "income", category: "others" }).lean()])
-    const sortList = [{ name: "salary", amount: getTotalAmount(salaryData) }, { name: "bonus", amount: getTotalAmount(bonusData) }, { name: "transportation", amount: getTotalAmount(transportationData) }, { name: "others", amount: getTotalAmount(othersData) }].sort()
-    for (let i = 0; i < sortList.length; i++) {
-      sortList[i].rating = i + 1
-    }
-    res.render('admin/catogryincomeRating', { sortList })
-  },
-  getCatogryexpenseRating: async (req, res) => {
-    const [housewaresData, transportationData, entertainmentData, consumptionData, othersData] = await Promise.all([Record.find({ type: "expense", category: "housewares" }).lean(),
-    Record.find({ type: "expense", category: "transportation" }).lean(),
-    Record.find({ type: "expense", category: "entertainment" }).lean(),
-    Record.find({ type: "expense", category: "consumption" }).lean(),
-    Record.find({ type: "expense", category: "others" }).lean()])
-    const sortList = [{ name: "housewares", amount: getTotalAmount(housewaresData) },
-    { name: "transportation", amount: getTotalAmount(transportationData) },
-    { name: "entertainment", amount: getTotalAmount(entertainmentData) },
-    { name: "consumption", amount: getTotalAmount(consumptionData) },
-    { name: "others", amount: getTotalAmount(othersData) }].sort(function (a, b) {
+    const index = "categoryRating"
+    const [salaryData, bonusData, investmentData, othersData] = await Promise.all([Record.find({ type: "income", category: "salary" }).lean(), Record.find({ type: "income", category: "bonus" }).lean(), Record.find({ type: "income", category: "investment" }).lean(), Record.find({ type: "income", category: "others" }).lean()])
+    const sortList = [{ name: "薪資所得", amount: getTotalAmount(salaryData) }, { name: "獎金紅利", amount: getTotalAmount(bonusData) }, { name: "投資報酬", amount: getTotalAmount(investmentData) }, { name: "其他", amount: getTotalAmount(othersData) }].sort(function (a, b) {
       return a.amount > b.amount ? -1 : 1;
     })
     for (let i = 0; i < sortList.length; i++) {
       sortList[i].rating = i + 1
     }
-    res.render('admin/catogryExpenseRating', { sortList })
+    res.render('admin/catogryincomeRating', { sortList, index })
+  },
+  getCatogryexpenseRating: async (req, res) => {
+    const index = "categoryRating"
+    const [housewaresData, transportationData, entertainmentData, consumptionData, othersData] = await Promise.all([Record.find({ type: "expense", category: "housewares" }).lean(),
+    Record.find({ type: "expense", category: "transportation" }).lean(),
+    Record.find({ type: "expense", category: "entertainment" }).lean(),
+    Record.find({ type: "expense", category: "consumption" }).lean(),
+    Record.find({ type: "expense", category: "others" }).lean()])
+    const sortList = [{ name: "家居物業", amount: getTotalAmount(housewaresData) },
+    { name: "交通出行", amount: getTotalAmount(transportationData) },
+    { name: "休閒娛樂", amount: getTotalAmount(entertainmentData) },
+    { name: "餐飲食品", amount: getTotalAmount(consumptionData) },
+    { name: "其他", amount: getTotalAmount(othersData) }].sort(function (a, b) {
+      return a.amount > b.amount ? -1 : 1;
+    })
+    for (let i = 0; i < sortList.length; i++) {
+      sortList[i].rating = i + 1
+    }
+    res.render('admin/catogryExpenseRating', { sortList, index })
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/admin/signin')
-  },
+  }
 }
 
 module.exports = adminController

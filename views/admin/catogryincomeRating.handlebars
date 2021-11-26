@@ -1,26 +1,24 @@
-<h1>收入類別排名</h1>
-
-
-<br />
-<br />
-
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">排名</th>
-      <th scope="col">收入類別</th>
-      <th scope="col">總額</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each sortList}}
-    <tr>
+     <h4>類別收入排名</h4>
+    <br />
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">排名</th>
+            <th scope="col">收入類別</th>
+            <th scope="col">總額</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each sortList}}
+          <tr>
       
-      <th scope="row">{{ this.rating }}</th>
+            <th scope="row">{{ this.rating }}</th>
+      
+            <td>{{ this.name }}</td>
+            <td>{{ this.amount }}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    
 
-      <td>{{ this.name }}</td>
-      <td>{{ this.amount }}</td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>

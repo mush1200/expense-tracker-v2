@@ -30,10 +30,10 @@ const userSchema = new Schema({
     type: String,
     default: 0,
     required: true,
-  }, 
-  records: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Record',
+  },
+  records: [{ 
+    type: Schema.ObjectId,
+    ref: 'Record'
   }]
 })
 module.exports = mongoose.model('User', userSchema)
