@@ -2,8 +2,6 @@ const userController = require('../../controllers/userController')
 const express = require('express')
 const router = express.Router()
 
-
-
 router.get('/login', userController.loginPage)
 router.post('/login', userController.login)
 router.get('/logout',userController.logout)

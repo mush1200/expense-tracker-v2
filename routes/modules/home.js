@@ -32,18 +32,6 @@ router.get('/balance', authenticator, balanceController.balancePage)
 
 router.get('/balance/records/filter', balanceController.getFilteredBalance)
 
-// admin
-
-router.get('/admin/signin', adminController.signInPage)
-router.post('/admin/login', adminController.login)
-router.get('/admin/logout', adminController.logout)
-router.get('/admin/index', authenticatedAdmin, adminController.adminPage)
-
-router.get('/admin/users/income', authenticatedAdmin, adminController.getUserIncomeRating)
-router.get('/admin/users/expense', authenticatedAdmin, adminController.getUserExpenseRating)
-router.get('/admin/category/income', authenticatedAdmin, adminController.getCatogryincomeRating)
-router.get('/admin/category/expense', authenticatedAdmin, adminController.getCatogryexpenseRating)
-router.get('/admin/user/:_id', authenticatedAdmin, adminController.getShowPage)
 router.get('/', authenticator, moneyController.getExpense)
 
 module.exports = router

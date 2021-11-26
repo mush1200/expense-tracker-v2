@@ -8,12 +8,12 @@ const adminController = {
   getShowPage: async (req, res, next) => {
     try {
       const userId = req.params._id
-      const user = await User.findOne({ userId }).populate({
+      const thisuser = await User.findOne({ userId }).populate({
         path: 'records',
       }).lean()
-      user.recordLength = user.records.length
-      user.TotalAmount = getTotalAmount(user.records)
-      res.render('admin/show', { user })
+      thisuser.recordLength = thisuser.records.length
+      thisuser.TotalAmount = getTotalAmount(thisuser.records)
+      res.render('admin/show', { thisuser })
     } catch (err) {
       console.warn(err)
     }
