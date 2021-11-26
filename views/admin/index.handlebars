@@ -10,6 +10,7 @@
       <th scope="col">email</th>
       <th scope="col">Name</th>
       <th scope="col">收支紀錄筆數</th>
+      <th scope="col">觀看及刪除</th>
     </tr>
   </thead>
   <tbody>
@@ -18,15 +19,12 @@
       <th scope="row">{{this.email}}</th>
       <td>{{this.name}}</td>
       <td>
-        <span></span>
+        <span>{{this.recordLength}}</span>
+      </td>
+      <td>
         <button type="button" class="btn btn-link">
           <a href="/admin/user/{{this._id}}">
             Show
-          </a>
-        </button>
-        <button type="button" class="btn btn-link">
-          <a href="/admin/user/{{this._id}}/edit">
-            Edit
           </a>
         </button>
         <form action="/admin/user/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">

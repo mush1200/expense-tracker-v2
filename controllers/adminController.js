@@ -5,6 +5,19 @@ const Record = require('../models/record')
 const Category = require('../models/category')
 const { getIconName, getTotalAmount } = require('../public/javascripts/helper')
 const adminController = {
+  getShowPage: async (req, res, next) => {
+    try {
+      const userId = req.params._id
+      const user = await User.findOne({ userId }).populate({
+        path: 'records',
+      }).lean()
+      user.recordLength = user.records.length
+      user.TotalAmount = getTotalAmount(user.records)
+      res.render('admin/show', { user })
+    } catch (err) {
+      console.warn(err)
+    }
+  },
   getUserIncomeRating: async (req, res, next) => {
     const users = await User.find({
       isAdmin: '0'
@@ -62,14 +75,21 @@ const adminController = {
     failureRedirect: '/admin/signin',
     failureFlash: true,
   }),
-  adminPage: (req, res) => {
-    User.find()
-      .lean()
-      .then()
-      .then(users => {
-        res.render('admin/index', { users })
-      })
-      .catch(err => console.log(err))
+  adminPage: async (req, res, next) => {
+    try {
+      const users = await User.find({
+        isAdmin: '0'
+      }).populate({
+        path: 'records',
+      }).lean()
+      for (i=0; i < users.length; i++) {
+        users[i].recordLength = users[i].records.length
+      }
+      res.render('admin/index', { users })
+    } catch (err) {
+      console.warn(err)
+    }
+
   },
   getCatogryincomeRating: async (req, res) => {
     const [salaryData, bonusData, transportationData, othersData] = await Promise.all([Record.find({ type: "income", category: "salary" }).lean(), Record.find({ type: "income", category: "bonus" }).lean(), Record.find({ type: "income", category: "transportation" }).lean(), Record.find({ type: "income", category: "others" }).lean()])

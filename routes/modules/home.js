@@ -43,6 +43,7 @@ router.get('/admin/users/income', authenticatedAdmin, adminController.getUserInc
 router.get('/admin/users/expense', authenticatedAdmin, adminController.getUserExpenseRating)
 router.get('/admin/category/income', authenticatedAdmin, adminController.getCatogryincomeRating)
 router.get('/admin/category/expense', authenticatedAdmin, adminController.getCatogryexpenseRating)
+router.get('/admin/user/:_id', authenticatedAdmin, adminController.getShowPage)
 router.get('/', authenticator, moneyController.getExpense)
 
 module.exports = router
