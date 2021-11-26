@@ -3,20 +3,37 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/user.js')
 const Record = require('../models/record')
 const Category = require('../models/category')
-const { getIconName, getTotalAmount } = require('../public/javascripts/helper')
+const { getIconName, getTotalAmount, getIncomeCategorizedSum, getExpenseCategorizedSum } = require('../public/javascripts/helper')
 const adminController = {
   getShowPage: async (req, res, next) => {
-    try {
-      const userId = req.params._id
-      const thisuser = await User.findOne({ userId }).populate({
-        path: 'records',
-      }).lean()
-      thisuser.recordLength = thisuser.records.length
-      thisuser.TotalAmount = getTotalAmount(thisuser.records)
-      res.render('admin/show', { thisuser })
-    } catch (err) {
-      console.warn(err)
-    }
+    const userId = req.params._id
+    const [ records, categories ] = await Promise.all([Record.find({ userId }).sort({ date: 'desc' }).lean(), Category.find().lean()])
+    records.forEach((record) => {
+        record.icon = getIconName(record.category, categories)
+    })
+     // processing chart data
+    const isIncomeRecordPresent = records.some((record) => record.type === 'income')
+    const isExpenseRecordPresent = records.some((record) => record.type === 'expense')
+    const incomeCategorizedSum = getIncomeCategorizedSum(records)
+    const expenseCategorizedSum = getExpenseCategorizedSum(records)
+    return res.render('admin/show', { 
+      records,
+      isIncomeRecordPresent,
+      isExpenseRecordPresent,
+      incomeCategorizedSum,
+      expenseCategorizedSum
+    })
+    // try {
+    //   const userId = req.params._id
+    //   const thisuser = await User.findOne({ userId }).populate({
+    //     path: 'records',
+    //   }).lean()
+    //   thisuser.recordLength = thisuser.records.length
+    //   thisuser.TotalAmount = getTotalAmount(thisuser.records)
+    //   res.render('admin/show', { thisuser })
+    // } catch (err) {
+    //   console.warn(err)
+    // }
   },
   getUserIncomeRating: async (req, res, next) => {
     const index = "userRating"
@@ -87,7 +104,8 @@ const adminController = {
       for (i=0; i < users.length; i++) {
         users[i].recordLength = users[i].records.length
       }
-      res.render('admin/index', { users })
+      const index = 'userList'
+      res.render('admin/index', { users, index })
     } catch (err) {
       console.warn(err)
     }

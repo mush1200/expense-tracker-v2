@@ -1,26 +1,60 @@
-<div class="row">
-  <div class="col-md-12">
-    <h1>{{thisuser.name}}</h1>
-  </div>
-
-  <div class="col-md-4">
-    <br>
-    <div class="well">
-      <ul class="list-unstyled">
-        <li><strong>Email:</strong> {{thisuser.email}}</li>
-        <li><strong>收支紀錄筆數:</strong> {{thisuser.recordLength}}</li>
-        <li><strong>收入總額:</strong> {{thisuser.TotalAmount}}</li>
-      </ul>
+<div class="container index-container my-3 pt-3">
+  <div class="row d-flex justify-content-around">
+    {{#if isIncomeRecordPresent}}
+    <div class="col-12 col-md-6 col-lg-5 mb-3">
+      <canvas id="income-chart" width="400" height="400" aria-label="income doughnut chart"></canvas>
     </div>
+    {{/if}}
+    <input id="salary" class="income-salary-sum" type="hidden" name="salary" value="{{ incomeCategorizedSum.salary }}">
+    <input id="bonus" class="income-bonus-sum" type="hidden" name="bonus" value="{{ incomeCategorizedSum.bonus }}">
+    <input id="investment" class="income-investment-sum" type="hidden" name="investment"
+      value="{{ incomeCategorizedSum.investment }}">
+    <input id="others" class="income-others-sum" type="hidden" name="others" value="{{ incomeCategorizedSum.others }}">
+    {{#if isExpenseRecordPresent}}
+    <div class="col-12 col-md-6 col-lg-5 mb-3">
+      <canvas id="expense-chart" width="400" height="400" aria-label="expense doughnut chart"></canvas>
+    </div>
+    {{/if}}
+    <input id="housewares" class="expense-housewares-sum" type="hidden" name="housewares"
+      value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.housewares }}{{else}}0{{/if}}">
+    <input id="transportation" class="expense-transportation-sum" type="hidden" name="transportation"
+      value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.transportation }}{{else}}0{{/if}}">
+    <input id="entertainment" class="expense-entertainment-sum" type="hidden" name="entertainment"
+      value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.entertainment }}{{else}}0{{/if}}">
+    <input id="consumption" class="expense-consumption-sum" type="hidden" name="consumption"
+      value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.consumption }}{{else}}0{{/if}}">
+    <input id="others" class="expense-others-sum" type="hidden" name="others"
+      value="{{#if isExpenseRecordPresent}}{{ expenseCategorizedSum.others }}{{else}}0{{/if}}">
   </div>
-  <div class="col-md-8">
-    <p>介紹自己</p>
-  </div>
-  <hr>
+  <ul class="list-group" id="record-panel">
+    {{#each records}}
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-10">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-2 d-flex justify-content-center align-items-center
+              category-icon-income">
+              <i class="{{ this.icon }}" style="font-size: 3vw;"></i>
+            </div>
+            <div class="col-7 mr-auto">
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <p class="my-3 font-weight-bold record-name" style="font-size: 1.2em;">{{ this.name }}</p>
+                  <p class="my-3 font-weight-bold record-date">{{ toDate this.date }}</p>
+                </div>
+                <div class="col-12 col-lg-6 d-flex align-items-center">
+                  <i class="fas fa-store place-icon" style="font-size: 1vw;"></i>
+                  <p class="m-2 font-weight-bold d-inline record-place">{{ this.merchant }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+              <p class="font-weight-bold record-amount">$&nbsp;{{ this.amount }}</p>
+            </div>
+          </div>
+        </li>
+      </div>
+    </div>
+    {{/each}}
+  </ul>
 </div>
-
-<hr>
-
-<br />
-<br />
-<a href="javascript:history.back()">回上一頁</a>
