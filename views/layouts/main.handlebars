@@ -17,20 +17,31 @@
   <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-info">
     {{#if (eq user.name "root")}}
     <a class="navbar-brand mb-0 h1 mr-auto" href="/admin/index">
-      使用者列表</a>
+      <i class="fas fa-search-dollar"></i></a>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item  active">
-          <a class="nav-link" href="/admin/users/income">使用者收入統計</a>
-        </li>
-        <li class="nav-item  active">
-          <a class="nav-link" href="/admin/users/expense">使用者支出統計</a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="/admin/category/income">收入類別統計</a>
+          <a class="{{#if (eq index 'userList')}} nav-link active{{else}} nav-link{{/if}}" href="/admin/index">使用者清單</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/category/expense">支出類別統計</a>
+        <li class="nav-item dropdown">
+          <a class="{{#if (eq index 'userRating')}}nav-link dropdown-toggle active {{else}} nav-link dropdown-toggle{{/if}}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            使用者排名
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/admin/users/income" >收入排行表</a>
+            <a class="dropdown-item" href="/admin/users/expense">支出排行表</a>
+          </div>
+        </li>
+        <li class="{{#if (eq index 'categoryRating')}}nav-item dropdown active {{else}} nav-item dropdown{{/if}}">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            類別排名
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/admin/category/income">收入排行表</a>
+            <a class="dropdown-item" href="/admin/category/expense">支出排行表</a>
+          </div>
         </li>
       </ul>
     </div>
