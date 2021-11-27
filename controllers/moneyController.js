@@ -266,6 +266,18 @@ const moneyController = {
       console.log(err)
       next(err)
     }
+  },
+  getSetting: async(req, res, next) => {
+    try {
+      const index = 'setting'
+      const userId = req.user._id
+      const user = await User.findOne({ userId }).lean()
+      const { name, email } = user
+      return res.render('setting', { name, email, index })
+    } catch(err) {
+      console.log(err)
+      next(err)
+    }
   }
 }
 module.exports = moneyController
