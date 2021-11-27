@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const User = require('../models/user.js')
 const Record = require('../models/record')
 const Category = require('../models/category')
-const { getIconName, getTotalAmount, getIncomeCategorizedSum, getExpenseCategorizedSum } = require('../public/javascripts/helper')
+const { getIconName, getTotalAmount, getIncomeCategorizedSum, getExpenseCategorizedSum, filterByCategory } = require('../public/javascripts/helper')
 const adminController = {
   getShowPage: async (req, res, next) => {
     const index = 'userList'
@@ -104,7 +104,8 @@ const adminController = {
   },
   getCatogryincomeRating: async (req, res) => {
     const index = "categoryRating"
-    const [salaryData, bonusData, investmentData, othersData] = await Promise.all([Record.find({ type: "income", category: "salary" }).lean(), Record.find({ type: "income", category: "bonus" }).lean(), Record.find({ type: "income", category: "investment" }).lean(), Record.find({ type: "income", category: "others" }).lean()])
+    const data = await Record.find({type: 'income'}).lean()
+    const [salaryData, bonusData, investmentData, othersData] = [filterByCategory(data,'salary'), filterByCategory(data,'bonus'), filterByCategory(data,'investment'), filterByCategory(data,'others')]
     const sortList = [{ name: "薪資所得", amount: getTotalAmount(salaryData) }, { name: "獎金紅利", amount: getTotalAmount(bonusData) }, { name: "投資報酬", amount: getTotalAmount(investmentData) }, { name: "其他", amount: getTotalAmount(othersData) }].sort(function (a, b) {
       return a.amount > b.amount ? -1 : 1;
     })
@@ -115,11 +116,8 @@ const adminController = {
   },
   getCatogryexpenseRating: async (req, res) => {
     const index = "categoryRating"
-    const [housewaresData, transportationData, entertainmentData, consumptionData, othersData] = await Promise.all([Record.find({ type: "expense", category: "housewares" }).lean(),
-    Record.find({ type: "expense", category: "transportation" }).lean(),
-    Record.find({ type: "expense", category: "entertainment" }).lean(),
-    Record.find({ type: "expense", category: "consumption" }).lean(),
-    Record.find({ type: "expense", category: "others" }).lean()])
+    const data = await Record.find({type: 'expense'}).lean()
+    const [ housewaresData, transportationData, entertainmentData, consumptionData, othersData ] = [ filterByCategory(data, 'housewares'), filterByCategory(data, 'transportation'), filterByCategory(data, 'entertainment'), filterByCategory(data, 'consumption'), filterByCategory(data, 'others') ]
     const sortList = [{ name: "家居物業", amount: getTotalAmount(housewaresData) },
     { name: "交通出行", amount: getTotalAmount(transportationData) },
     { name: "休閒娛樂", amount: getTotalAmount(entertainmentData) },

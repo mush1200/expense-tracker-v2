@@ -55,4 +55,7 @@ module.exports = {
   getAccountingFormat(amount) {
     return amount.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ',')
   },
+  filterByCategory(aim, category) {
+    return aim.filter(item => item.category == category)
+  }
 }
