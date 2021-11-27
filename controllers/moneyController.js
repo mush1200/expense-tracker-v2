@@ -1,7 +1,8 @@
 const moment = require('moment')
+const bcrypt = require('bcryptjs')
 const Record = require('../models/record')
 const Category = require('../models/category')
-const { getIconName, getTotalAmount } = require('../public/javascripts/helper')
+const { getIconName, getTotalAmount, userFilter } = require('../public/javascripts/helper')
 const User = require('../models/user')
 const moneyController = {
   getExpense: async(req, res, next) => {
@@ -270,14 +271,65 @@ const moneyController = {
   getSetting: async(req, res, next) => {
     try {
       const index = 'setting'
-      const userId = req.user._id
-      const user = await User.findOne({ userId }).lean()
+      const _id = req.user._id
+      const user = await User.findOne({ _id }).lean()
       const { name, email } = user
       return res.render('setting', { name, email, index })
     } catch(err) {
       console.log(err)
       next(err)
     }
+  },
+  putSetting: async (req, res, next) => {
+    try {
+      const _id = req.user._id
+      const { name, newEmail, password, confirmPassword } = req.body
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,}$/
+      let errors = []
+      if (!name || !newEmail) {
+        errors.push({ message: '姓名/Email不可空白。' })
+      }
+      if (name.length > 32) {
+        errors.push({ message: '不可大於32字元。' })
+      }
+      const users = await User.find({ _id: { $ne: _id } })
+      const userFilterData = userFilter(users, newEmail)
+      if (userFilterData.length > 0) {
+        errors.push({ message: '這個信箱已經存在了。' })
+      }
+      if (errors.length) {
+        return res.render('setting', { errors, name, newEmail, password, confirmPassword })
+      }
+      const user = await User.findOne( _id )
+      if (password === "") {
+        await user.updateOne({
+          name: name,
+          email: newEmail
+        })
+        req.flash('success_messages', '成功更新個人資料設定！')
+        return res.redirect('/setting')
+      } else {
+        let errors = []
+        if (!regex.test(password)) {
+          errors.push({ message: '密碼至少8碼，至少1個大寫字母，1個小寫字母和1個數字！' })
+        }
+        if (password !== confirmPassword) {
+          errors.push({ message: '密碼及確認密碼不一致！' })
+        }
+        if (errors.length) {
+          return res.render('setting', { errors, name, newEmail, password, confirmPassword })
+        }
+        await user.updateOne({
+          name, email: newEmail,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+        })
+        req.flash('success_messages', '成功更新個人資料設定！')
+        return res.redirect('/setting')
+      }
+    } catch (error) {
+      console.warn(error)
+    }
+
   }
 }
 module.exports = moneyController
