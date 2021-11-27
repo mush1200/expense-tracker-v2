@@ -7,9 +7,7 @@
 }
 .alert{
   background: #ffdb9b;
-  min-width: 300px;
-
-
+  min-width: 360px;
   border-radius: 4px;
   border-left: 8px solid #ffa502;
   overflow: hidden;
@@ -89,7 +87,7 @@
 .success{
   background: #e5ffe9;
   padding: 20px 40px;
-  min-width: 300px;
+  min-width: 360px;
   position: absolute;
   z-index: 4;
   right: 0;

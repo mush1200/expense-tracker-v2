@@ -20,7 +20,7 @@ const userController = {
     req.flash('error_messages', '請填寫註冊資訊。')
     return res.render('register')
   },
-  register: async (req, res) => {
+  register: async(req, res, next) => {
     try {
       const { name, email, password, confirmPassword } = req.body
       const errors = []
