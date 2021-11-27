@@ -1,5 +1,3 @@
-const passport = require('passport')
-const bcrypt = require('bcryptjs')
 const User = require('../models/user.js')
 const Record = require('../models/record')
 const Category = require('../models/category')
@@ -92,14 +90,14 @@ const adminController = {
     }
   },
   signInPage: async (req, res) => {
+    req.flash('error_messages', '請填寫登入資料。')
     req.logout()
     return res.render('admin/signin')
   },
-  login: passport.authenticate('local', {
-    successRedirect: '/admin/index',
-    failureRedirect: '/admin/signin',
-    failureFlash: true,
-  }),
+  login: (req, res) => {
+    req.flash('success_messages', '管理者已成功登入！')
+    res.redirect('/admin/index')
+  },
   adminPage: async (req, res, next) => {
     try {
       const users = await User.find({
@@ -115,7 +113,6 @@ const adminController = {
     } catch (err) {
       console.warn(err)
     }
-
   },
   getCatogryincomeRating: async (req, res, next) => {
     try {

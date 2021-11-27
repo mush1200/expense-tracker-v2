@@ -1,14 +1,17 @@
 {{!--error Message開頭 --}}
 {{#if errors}}
-{{#each errors}}
-<div class="alert show showAlert">
-  <span class="fas fa-exclamation-circle"></span>
-  <span class="message">{{this.message}}</span>
-  <div class="close-btn">
-    <span class="fas fa-times"></span>
+<div class="wrapper">
+  {{#each errors}}
+  <div class="alert show showAlert">
+    <span class="fas fa-exclamation-circle"></span>
+    <span class="message">{{this.message}}</span>
+    <div class="close-btn">
+      <span class="fas fa-times"></span>
+    </div>
   </div>
+  {{/each}}
 </div>
-{{/each}}
+
 {{/if}}
 {{!--error Message開頭 --}}
 {{!--Flash Message開頭 --}}
@@ -22,11 +25,13 @@
 </div>
 {{/if}}
 {{#if error_messages}}
-<div class="alert show showAlert">
-  <span class="fas fa-exclamation-circle"></span>
-  <span class="message">{{error_messages}}</span>
-  <div class="close-btn">
-    <span class="fas fa-times"></span>
+<div class="wrapper">
+  <div class="alert show showAlert">
+    <span class="fas fa-exclamation-circle"></span>
+    <span class="message">{{error_messages}}</span>
+    <div class="close-btn">
+      <span class="fas fa-times"></span>
+    </div>
   </div>
 </div>
 {{/if}}

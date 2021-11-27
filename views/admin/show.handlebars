@@ -1,3 +1,4 @@
+{{#if records}}
 <div class="container index-container my-3 pt-3">
   <div class="row d-flex justify-content-around">
     {{#if isIncomeRecordPresent}}
@@ -58,3 +59,6 @@
     {{/each}}
   </ul>
 </div>
+{{else}}
+<h4>無收支紀錄</h4>
+{{/if}}

@@ -1,10 +1,14 @@
 const adminController = require('../../controllers/adminController.js')
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 const { authenticator, authenticatedAdmin } = require('../../middleware/auth')
 
 router.get('/signin', adminController.signInPage)
-router.post('/login', adminController.login)
+router.post('/login', passport.authenticate('local', {
+  failureRedirect: '/admin/signin',
+  failureFlash: true,
+}), adminController.login)
 router.get('/logout', adminController.logout)
 router.get('/index', authenticatedAdmin, adminController.adminPage)
 
