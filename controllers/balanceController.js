@@ -58,9 +58,7 @@ const balanceController = {
     })
     const totalAmount = getTotalAmount(filteredRecords)
     const isIncomeRecordPresent = filteredRecords.some((record) => record.type === 'income')
-    console.log(isIncomeRecordPresent)
     const isExpenseRecordPresent = filteredRecords.some((record) => record.type === 'expense')
-    console.log(isExpenseRecordPresent)
     const incomeCategorizedSum = getIncomeCategorizedSum(filteredRecords)
     const expenseCategorizedSum = getExpenseCategorizedSum(filteredRecords)
 
