@@ -20,7 +20,7 @@ const userController = {
   registerPage: (req, res) => {
     return res.render('register')
   },
-  register: async(req, res) => {
+  register: async(req, res, next) => {
     try {
         const { name, email, password, confirmPassword } = req.body
         const errors = []
