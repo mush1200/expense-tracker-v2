@@ -1,8 +1,8 @@
 <div class="container mt-5">
   {{#if (eq index "expense")}}
-  <form action="/expense/records" method="POST" class="d-flex flex-column align-items-center" id="form" novalidate>
+  <form action="/expense/records" method="POST" class="d-flex flex-column align-items-center" id="form">
   {{else}}
-  <form action="/income/records" method="POST" class="d-flex flex-column align-items-center" id="form" novalidate>
+  <form action="/income/records" method="POST" class="d-flex flex-column align-items-center" id="form">
   {{/if}}
   
     <div class="col-sm-8">
