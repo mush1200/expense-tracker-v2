@@ -28,7 +28,8 @@ app.set('view engine', 'handlebars')
 app.use(session({
   secret: 'ThisIsMySecret',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { maxAge: 600 * 1000 }
 }))
 usePassport(app)
 app.use(flash())
