@@ -7,6 +7,8 @@ const app = express()
 const methodOverride = require('method-override') 
 const routes = require('./routes')
 const chart = require('chart.js')
+const cookieParser = require('cookie-parser');
+const MemoryStore = require('session-memory-store')(session);
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -23,11 +25,16 @@ app.set('view engine', 'handlebars')
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(express.static('public'))
+app.use(cookieParser())
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 600 * 1000 }
+  cookie: { 
+    maxAge: 600 * 1000,
+    secure: true
+  },
+  tore: new MemoryStore()
 }))
 usePassport(app)
 app.use(flash())
