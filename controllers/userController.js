@@ -4,7 +4,6 @@ const User = require('../models/user')
 
 const userController = {
   loginPage: (req, res) => {
-    req.flash('error_messages', '請填寫登入資料。')
     return res.render('login')
   },
   login: (req, res) => {

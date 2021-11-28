@@ -90,7 +90,6 @@ const adminController = {
     }
   },
   signInPage: async (req, res) => {
-    req.flash('error_messages', '請填寫登入資料。')
     req.logout()
     return res.render('admin/signin')
   },
