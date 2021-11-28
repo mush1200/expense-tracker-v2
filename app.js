@@ -34,7 +34,7 @@ app.use(session({
     maxAge: 600 * 1000,
     secure: true
   },
-  tore: new MemoryStore()
+  store: new MemoryStore()
 }))
 usePassport(app)
 app.use(flash())
