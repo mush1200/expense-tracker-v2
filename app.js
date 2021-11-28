@@ -1,5 +1,6 @@
 const express = require('express')
 const session = require('express-session')
+// const MemoryStore = require('memorystore')(session)
 const usePassport = require('./config/passport')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
@@ -7,14 +8,14 @@ const app = express()
 const methodOverride = require('method-override') 
 const routes = require('./routes')
 const chart = require('chart.js')
-const cookieParser = require('cookie-parser');
-const MemoryStore = require('session-memory-store')(session);
+const cookieParser = require('cookie-parser')
+const MemoryStore = require('session-memory-store')(session)
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 require('./config/mongoose')
-const port = process.env.port
-
+const PORT = process.env.PORT 
+const host = '0.0.0.0'
 app.engine('handlebars',
   exphbs({
     defaultLayout: 'main',
@@ -27,14 +28,15 @@ app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(cookieParser())
 app.use(session({
+  // cookie: {
+  //   maxAge: 60000,
+  //   secure: true
+  // },
+  store: new MemoryStore(),
+  secret: 'ThisIsMySecret',
   secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { 
-    maxAge: 600 * 1000,
-    secure: true
-  },
-  store: new MemoryStore()
+  resave: true,
+  saveUninitialized: true
 }))
 usePassport(app)
 app.use(flash())
@@ -48,6 +50,6 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(port, () => {
-  console.log(`The Express server is running on http://localhost:${port}.`)
+app.listen(PORT, host, () => {
+  console.log(`The Express server is running on http://localhost:${PORT}.`)
 })
