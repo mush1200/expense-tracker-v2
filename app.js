@@ -11,22 +11,20 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 require('./config/mongoose')
-const port = process.env.port || 3000
+const port = process.env.port
 
-
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
-
-app.engine('handlebars', 
-  exphbs({ 
+app.engine('handlebars',
+  exphbs({
     defaultLayout: 'main',
     helpers: require('./config/handlebars-helpers')
   })
 )
 app.set('view engine', 'handlebars')
-
+app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+app.use(express.static('public'))
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 600 * 1000 }
@@ -40,7 +38,7 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')  // 設定 warning_msg 訊息
   next()
 })
-app.use(methodOverride('_method'))
+
 app.use(routes)
 
 app.listen(port, () => {

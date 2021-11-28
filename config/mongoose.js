@@ -1,9 +1,9 @@
+require('dotenv').config({ debug: true })
 const mongoose = require('mongoose')
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/expense-tracker-v2'
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+const MONGODB_URI = process.env.MONGODB_URI
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true})
 
 const db = mongoose.connection
-
 //連線異常
 db.on('error', () => {
   console.log('mongodb error!')
