@@ -2,31 +2,27 @@
 一個用Express和MongoDB所建立的簡單記帳工具應用程式。可以註冊帳號登入，使用者可以創建、編輯、瀏覽支出收入紀錄。
 
 #### 登入畫面
-![login image](public\images\expenseTracker登入畫面.png)
+![login image](https://github.com/mush1200/expense-tracker-v2/blob/main/public/images/expenseTracker%E7%99%BB%E5%85%A5%E7%95%AB%E9%9D%A2.png)
 <br/><br/>
 
 #### 支出畫面
-![balance image]()
-<br/><br/>
-
-#### 收入畫面
-![balance image]()
+![balance image](https://github.com/mush1200/expense-tracker-v2/blob/main/public/images/expenseTracker%E6%94%AF%E5%87%BA%E7%95%AB%E9%9D%A2.png)
 <br/><br/>
 
 #### 收支平衡畫面
-![balance image]()
+![balance image](https://github.com/mush1200/expense-tracker-v2/blob/main/public/images/expenseTracker%E6%94%B6%E6%94%AF%E5%B9%B3%E8%A1%A1%E7%95%AB%E9%9D%A2.png)
 <br/><br/>
 
 #### 後臺使用者清單畫面
-![balance image]()
+![balance image](https://github.com/mush1200/expense-tracker-v2/blob/main/public/images/expenseTracker%E5%BE%8C%E8%87%BA%E4%BD%BF%E7%94%A8%E8%80%85%E6%B8%85%E5%96%AE.png)
 <br/><br/>
 
 #### 後臺類別支出排名畫面
-![balance image]()
+![balance image](https://github.com/mush1200/expense-tracker-v2/blob/main/public/images/expenseTracker%E5%BE%8C%E8%87%BA%E9%A1%9E%E5%88%A5%E6%94%AF%E5%87%BA%E6%8E%92%E5%90%8D.png)
 <br/><br/>
 
 #### 後臺類別使用者收入排名畫面
-![balance image]()
+![balance image](https://github.com/mush1200/expense-tracker-v2/blob/main/public/images/expenseTracker%E5%BE%8C%E8%87%BA%E4%BD%BF%E7%94%A8%E8%80%85%E6%94%B6%E5%85%A5%E6%8E%92%E5%90%8D.png)
 <br/><br/>
 
 ## 部屬至Heroku網址
