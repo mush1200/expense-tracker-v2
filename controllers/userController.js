@@ -16,7 +16,6 @@ const userController = {
     res.redirect('/users/login')
   },
   registerPage: (req, res) => {
-    req.flash('error_messages', '請填寫註冊資訊。')
     return res.render('register')
   },
   register: async(req, res, next) => {

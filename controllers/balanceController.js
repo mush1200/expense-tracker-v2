@@ -1,7 +1,7 @@
 const moment = require('moment')
 const Record = require('../models/record')
 const Category = require('../models/category')
-const { getTotalAmount, getTotalBalance, getIconName, getIncomeCategorizedSum, getExpenseCategorizedSum } = require('../public/javascripts/helper')
+const { getTotalAmount, getTotalBalance, getIconName, getIncomeCategorizedSum, getExpenseCategorizedSum, getAccountingFormat } = require('../public/javascripts/helper')
 
 const balanceController = {
   balancePage: async (req, res, next) => {
@@ -19,7 +19,7 @@ const balanceController = {
       const incomeCategorizedSum = getIncomeCategorizedSum(records)
       const expenseCategorizedSum = getExpenseCategorizedSum(records)
       // processing other data
-      const totalAmount = getTotalBalance(records)
+      const totalAmount = getAccountingFormat(getTotalBalance(records))
       const startDate = '2021-01-01'
       const endDate = moment().format('YYYY-MM-DD')
       res.render('balance', {
@@ -57,7 +57,7 @@ const balanceController = {
       filteredRecords.forEach((record) => {
         record.icon = getIconName(record.category, categories)
       })
-      const totalAmount = getTotalAmount(filteredRecords)
+      const totalAmount = getAccountingFormat(getTotalAmount(filteredRecords))
       const isIncomeRecordPresent = filteredRecords.some((record) => record.type === 'income')
       console.log(isIncomeRecordPresent)
       const isExpenseRecordPresent = filteredRecords.some((record) => record.type === 'expense')

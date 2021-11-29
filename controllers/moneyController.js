@@ -2,7 +2,7 @@ const moment = require('moment')
 const bcrypt = require('bcryptjs')
 const Record = require('../models/record')
 const Category = require('../models/category')
-const { getIconName, getTotalAmount, userFilter } = require('../public/javascripts/helper')
+const { getIconName, getTotalAmount, userFilter, getAccountingFormat } = require('../public/javascripts/helper')
 const User = require('../models/user')
 const moneyController = {
   getExpense: async(req, res, next) => {
@@ -18,7 +18,7 @@ const moneyController = {
       records.forEach((record) => {
         record.icon = getIconName(record.category, categories)
       })
-      const totalAmount = getTotalAmount(records)
+      const totalAmount = getAccountingFormat(getTotalAmount(records))
       const startDate = '2021-01-01'
       const endDate = moment().format('YYYY-MM-DD')
       const index = "expense"
@@ -56,7 +56,7 @@ const moneyController = {
       filteredRecords.forEach((record) => {
         record.icon = getIconName(record.category, categories)
       })
-      let totalAmount = getTotalAmount(filteredRecords)
+      let totalAmount = getAccountingFormat(getTotalAmount(filteredRecords))
       res.render('index', {
         records: filteredRecords,
         totalAmount,
@@ -168,7 +168,7 @@ const moneyController = {
       incomeRecords.forEach((incomeRecord) => {
         incomeRecord.icon = getIconName(incomeRecord.category, categories)
       })
-      const totalAmount = getTotalAmount(incomeRecords)
+      const totalAmount = getAccountingFormat(getTotalAmount(incomeRecords))
       const startDate = '2021-01-01'
       const endDate = moment().format('YYYY-MM-DD')
       const index = "income"
@@ -206,7 +206,7 @@ const moneyController = {
       filteredRecords.forEach((record) => {
         record.icon = getIconName(record.category, categories)
       })
-      let totalAmount = getTotalAmount(filteredRecords)
+      let totalAmount = getAccountingFormat(getTotalAmount(filteredRecords))
       res.render('index', {
         records: filteredRecords,
         totalAmount,
